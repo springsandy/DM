@@ -268,3 +268,9 @@ Temporary Items
 .apdisk
 
 **/migrations/
+.idea/.gitignore
+.idea/DM.iml
+.idea/inspectionProfiles/
+.idea/misc.xml
+.idea/modules.xml
+.idea/vcs.xml

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Project Detail</title>
+
+    <!-- CSS only -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+    <!-- JS, Popper.js, and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'mystyle.css' %}">
+</head>
+<body>
+    <div class="container">
+    <br>
+        <h1><b>DM</b></h1>
+        <br>
+        <div class="row">
+            <h3><b><{{ project.title }}>-{{ project.round }}회</b></h3>
+        </div><br>
+        <div class="row">
+            <div class="col-4">
+                {% if project.img != '' %}
+                    <img class="img" src="{{ project.img.url }}" style="height: 450px">
+                {% else %}
+                {% endif %}
+            </div>
+            <div class="col">
+                {% if project.video != '' %}
+                    <video controls autoplay style="width: 800px">
+                        <source src="{{ project.video.url }}" type="video/mp4">
+                    </video>
+                {% else %}
+                {% endif %}
+{#                <h6><b>방송사</b></h6>#}
+{#                {% if project.channel == 0 %}#}
+{#                    KBS#}
+{#                {% elif project.channel == 1 %}#}
+{#                    SBS#}
+{#                {% elif project.channel == 2 %}#}
+{#                    MBC#}
+{#                {% elif project.channel == 3 %}#}
+{#                    tvN#}
+{#                {% endif %}<p>#}
+{#                <h6><b>요일</b></h6>#}
+{#                {% if project.week == 0 %}#}
+{#                    월·화#}
+{#                {% elif project.week == 1 %}#}
+{#                    수·목#}
+{#                {% elif project.week == 2 %}#}
+{#                    금·토#}
+{#                {% elif project.week == 3 %}#}
+{#                    토·일#}
+{#                {% endif %}<br><br>#}
+{#                {{ project.diary }}#}
+            </div>
+        </div><br>
+        <div class="row">
+            <div class="col">
+                <h6><b>방송사</b></h6>
+                {% if project.channel == 0 %}
+                    KBS
+                {% elif project.channel == 1 %}
+                    SBS
+                {% elif project.channel == 2 %}
+                    MBC
+                {% elif project.channel == 3 %}
+                    tvN
+                {% endif %}<p>
+                <h6><b>요일</b></h6>
+                {% if project.week == 0 %}
+                    월·화
+                {% elif project.week == 1 %}
+                    수·목
+                {% elif project.week == 2 %}
+                    금·토
+                {% elif project.week == 3 %}
+                    토·일
+                {% endif %}<br><br>
+                {{ project.diary }}
+            </div>
+        </div>
+        <br><br><br>
+    </div>
+</body>
+</html>

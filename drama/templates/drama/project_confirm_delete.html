@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Drink Confirm Delete</title>
+</head>
+<body>
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ project }}<br>
+        <b>정말 지울까요?</b>
+        <button type="submit">Delete</button>
+        <button type="button" onclick="history.back()">Cancel</button>
+    </form>
+</body>
+</html>

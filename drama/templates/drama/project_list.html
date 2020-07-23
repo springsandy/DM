@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Project List</title>
+
+    <!-- CSS only -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+    <!-- JS, Popper.js, and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/mystyle.css' %}">
+</head>
+<body>
+    <br>
+    <div class="container">
+    <h1><b>DM</b></h1>
+        <ul class="nav">
+            <li class="nav-item"><a class="nav-link" href="{% url 'drama:list' %}">전체</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'drama:a' %}">KBS</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'drama:b' %}">SBS</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'drama:c' %}">MBC</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'drama:d' %}">tvN</a></li>
+        </ul>
+        <form action="" class="search" method="get">
+            <div class="row">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="text" name="search_title" value="{{ request.GET.search_title }}" class="form-control" style="width: 300px">
+                <button type="submit" class="search btn-dark">Search</button>
+            </div>
+        </form>
+        <p></p>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>방송사</th>
+                <th>제목</th>
+                <th>회차</th>
+                <th>Modify</th>
+                <th>Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+                {% for project in project_list %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>
+                            {% if project.channel == 0 %}
+                                KBS
+                            {% elif project.channel == 1 %}
+                                SBS
+                            {% elif project.channel == 2 %}
+                                MBC
+                            {% elif project.channel == 3 %}
+                                tvN
+                            {% endif %}
+                        </td>
+                        <td><a href="{% url 'drama:detail' pk=project.id %}">{{ project.title }}</a></td>
+                        <td>{{ project.round }}</td>
+                        <td><a href="{% url 'drama:update' pk=project.id %}" class="btn btn-success btn-sm">Modify</a></td>
+                        <td><a href="{% url 'drama:delete' pk=project.id %}" class="btn btn-danger btn-sm">Delete</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="{% url 'drama:add' %}" class="btn btn-primary btn-sm">Add Bookmark</a>
+        <div class="row">
+            <div class="col">
+                {% if is_paginated %}
+                <ul class="pagination pagination-sm justify-content-center">
+                    {% if page_obj.has_previous %}
+                        <li class="page-item"><a href="{{ request.path }}?page={{ page_obj.previous_page_number }}" class="page-link">Previous</a></li>
+                    {% else %}
+                        <li class="page-item disabled"><a href="" class="page-link">Previous</a></li>
+                    {% endif %}
+                    <!-- 127.0.0.1/bookmark/?page=숫자 -->
+                    {% for page in page_obj.paginator.page_range %}
+                        <li class="page-item{% if page_obj.number == forloop.counter %} disabled{% endif %}">
+                            <a href="{{ request.path }}?page={{ forloop.counter }}" class="page-link">{{ forloop.counter }}</a>
+                        </li>
+                    {% endfor %}
+                    {% if page_obj.has_next %}
+                        <li class="page-item"><a href="{{ request.path }}?page={{ page_obj.next_page_number }}" class="page-link">Next</a></li>
+                    {% else %}
+                        <li class="page-item disabled"><a href="" class="page-link">Next</a></li>
+                    {% endif %}
+                </ul>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>
